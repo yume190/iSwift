@@ -82,6 +82,6 @@ class SocketIn {
             throw Error.socketError("message blobs are not enough.")
         }
         
-        return SerializedMessage(idents: idents, signature: messageBlobs[0], header: messageBlobs[1], parentHeader: messageBlobs[2], metadata: messageBlobs[3], content: messageBlobs[4], extraBlobs: messageBlobs.suffix(from: 5).flatMap { $0 })
+        return SerializedMessage(idents: idents, signature: messageBlobs[0], header: messageBlobs[1], parentHeader: messageBlobs[2], metadata: messageBlobs[3], content: messageBlobs[4], extraBlobs: messageBlobs.suffix(from: 5).compactMap { $0 })
     }
 }

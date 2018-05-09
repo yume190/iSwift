@@ -69,12 +69,17 @@ class MessageProcessor {
                 
                 Logger.debug.print("Sending sourcekitten request -- \(r)")
                 
-                let completionItems = CodeCompletionItem.parse(response: r.send())
-                let matches = completionItems.flatMap { $0.descriptionKey }
-                let cursorEnd = content.cursorPosition
-                let cursorStartOffset = completionItems.first?.numBytesToErase ?? 0
-                
-                replyContent = CompleteReply(matches: matches, cursorStart: cursorEnd - Int(cursorStartOffset), cursorEnd: cursorEnd, status: "ok")
+                do {
+                    let completionItems = try CodeCompletionItem.parse(response: r.send())
+                    let matches = completionItems.compactMap { $0.descriptionKey }
+                    let cursorEnd = content.cursorPosition
+                    let cursorStartOffset = completionItems.first?.numBytesToErase ?? 0
+                    
+                    replyContent = CompleteReply(matches: matches, cursorStart: cursorEnd - Int(cursorStartOffset), cursorEnd: cursorEnd, status: "ok")
+                } catch let e {
+                    Logger.critical.print(e)
+                    continue
+                }
             default:
                 continue
             }

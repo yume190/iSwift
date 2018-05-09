@@ -8,7 +8,8 @@
 
 import Foundation
 import ZeroMQ
-import CommandLineKit
+//import CommandLineKit
+import CommandLine
 import Dispatch
 
 private let loggerLevel = 30

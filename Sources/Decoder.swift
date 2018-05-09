@@ -19,7 +19,7 @@ class Decoder {
             let signature = SHA256(key: key, dataList: [message.header, message.parentHeader, message.metadata, message.content]).hexDigest()
             
             if message.signature != signature {
-                Logger.warning.print("Malformed incoming message with sigature \(message.signature.toUTF8String()) identity \(message.idents). The signature should be \(signature.toUTF8String())")
+                Logger.warning.print("Malformed incoming message with sigature \(message.signature.toUTF8String() ?? "nil") identity \(message.idents). The signature should be \(signature.toUTF8String() ?? "nil")")
                 continue
             }
             

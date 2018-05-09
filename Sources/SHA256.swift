@@ -2,7 +2,7 @@ import Foundation
 import Cryptor
 
 extension UInt8 {
-    fileprivate static let allHexits: [Character] = "0123456789abcdef".characters.flatMap { $0 }
+    fileprivate static let allHexits: [Character] = "0123456789abcdef".compactMap { $0 }
     
     func toHex() -> String {
         let nybbles = [ Int(self >> 4), Int(self & 0x0F) ]
@@ -13,7 +13,7 @@ extension UInt8 {
 
 extension Data {
     func toHexString() -> String {
-        return flatMap { $0.toHex() }.reduce("", +)
+        return compactMap { $0.toHex() }.reduce("", +)
     }
     
     func toUTF8String() -> String? {

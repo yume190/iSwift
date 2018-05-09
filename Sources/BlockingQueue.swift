@@ -37,7 +37,7 @@ class BlockingQueue<Element> {
             t = DispatchTime.distantFuture
         }
         
-        dataSemaphore.wait(timeout: t)
+        let _ = dataSemaphore.wait(timeout: t)
         
         // This will throw error if there's no element.
         return dataSource.removeFirst()

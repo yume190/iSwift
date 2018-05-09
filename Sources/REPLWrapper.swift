@@ -39,7 +39,7 @@ class REPLWrapper: NSObject {
     
     private var sameLineOutput = ""
     
-    func taskDidTerminated(_ notification: Notification) {
+    @objc func taskDidTerminated(_ notification: Notification) {
         Logger.debug.print("REPL has been terminated.")
     }
     
@@ -138,7 +138,7 @@ class REPLWrapper: NSObject {
     
     // MARK: - Response handle.
     
-    func didReceivedData(_ notification: Notification) {
+    @objc func didReceivedData(_ notification: Notification) {
         let data = currentTask.availableData
         
         guard let dataStr = String(data: data, encoding: .utf8) else { return }
@@ -178,7 +178,7 @@ class REPLWrapper: NSObject {
             }
         }
         
-        promptSemaphore.wait(timeout: DispatchTime.distantFuture)
+        let _ = promptSemaphore.wait(timeout: DispatchTime.distantFuture)
         
         Logger.debug.print("Expect passed...")
         

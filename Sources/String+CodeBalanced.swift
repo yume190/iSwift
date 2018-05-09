@@ -14,7 +14,7 @@ extension String {
         let openBrackets: [Character] = ["(", "[", "{"]
         let closeBrackets: [Character] = [")", "]", "}"]
         
-        for c in stripQuotes().characters {
+        for c in stripQuotes() {
             if let index = openBrackets.index(of: c) {
                 stack.push(index)
             } else if let index = closeBrackets.index(of: c) {

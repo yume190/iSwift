@@ -49,8 +49,8 @@ class Shell {
             fatalError(NSPOSIXErrorDomain)
         }
         
-        fcntl(fdMaster, F_SETFD, FD_CLOEXEC)
-        fcntl(fdSlave, F_SETFD, FD_CLOEXEC)
+        let _ = fcntl(fdMaster, F_SETFD, FD_CLOEXEC)
+        let _ = fcntl(fdSlave, F_SETFD, FD_CLOEXEC)
         
         if !echoOn {
             try? turnOffEcho(fdMaster)
@@ -176,7 +176,7 @@ class Shell {
     private func _waitForDataInBackgroundAndNotify(forModes modes: [RunLoopMode]) {
         Printer.print("Waiting for data...")
         
-        let data = UnsafeMutableRawPointer.allocate(bytes: MAX_DATA_SIZE, alignedTo: MemoryLayout<UInt8>.alignment)
+        let data = UnsafeMutableRawPointer.allocate(byteCount: MAX_DATA_SIZE, alignment: MemoryLayout<UInt8>.alignment)
         var actualSize = read(self.fdMaster, data, MAX_DATA_SIZE)
         var finalData = Data()
         while actualSize >= 0 {
