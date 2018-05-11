@@ -30,6 +30,7 @@ class Shell {
     private let dataReadSerialQueue = DispatchQueue(label: "iSwiftCore.Shell.DataRead")
     
     var launchPath: String = ""
+    var arguments: [String] = []
     var echoOn: Bool = false
     var availableData = Data()
     
@@ -73,15 +74,19 @@ class Shell {
         posix(posix_spawn_file_actions_adddup2(&fileActions, fdSlave, STDOUT_FILENO))
         posix(posix_spawn_file_actions_adddup2(&fileActions, fdSlave, STDERR_FILENO))
         
-        let args = [launchPath]
+        let args = [launchPath] + arguments
         
         let argv : UnsafeMutablePointer<UnsafeMutablePointer<Int8>?> = args.withUnsafeBufferPointer {
             let array : UnsafeBufferPointer<String> = $0
             let buffer = UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>.allocate(capacity: array.count + 1)
             buffer.initialize(from: array.map { $0.withCString(strdup) })
+//            let buf = UnsafeMutableBufferPointer.initialize(from:array.map { $0.withCString(strdup) })
             buffer[array.count] = nil
             return buffer
         }
+        
+        print("yume \(args)")
+        print("yume \(argv)")
         
         // Start the process.
         posix(posix_spawn(&pid, launchPath.cString(using: String.Encoding.utf8), &fileActions, nil, argv, nil))

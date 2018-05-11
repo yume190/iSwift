@@ -47,12 +47,30 @@
         }
       },
       {
+        "package": "CryptoSwift",
+        "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "526d5e91569b30857d8def9ea22ad7265b70d238",
+          "version": "0.9.0"
+        }
+      },
+      {
         "package": "CZeroMQ",
         "repositoryURL": "https://github.com/Zewo/CZeroMQ.git",
         "state": {
           "branch": null,
           "revision": "d7630758ece813c8a707f8630ba34607e0318590",
           "version": "1.0.3"
+        }
+      },
+      {
+        "package": "FileKit",
+        "repositoryURL": "https://github.com/IBM-Swift/FileKit",
+        "state": {
+          "branch": null,
+          "revision": "319016dbf4b3ce04589265c23c9cac0016fe8096",
+          "version": "0.0.1"
         }
       },
       {
@@ -71,6 +89,24 @@
           "branch": null,
           "revision": "833125251b2d026bee6afa0aff2967a90eb63cd0",
           "version": "1.0.1"
+        }
+      },
+      {
+        "package": "JSONDecodeKit",
+        "repositoryURL": "https://github.com/yume190/JSONDecodeKit",
+        "state": {
+          "branch": null,
+          "revision": "36ef8643438b8f75e03039e955800cc98dc53c3e",
+          "version": "4.0.3"
+        }
+      },
+      {
+        "package": "LoggerAPI",
+        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "5041f2673aa75d6e973d9b6bd3956bc5068387c8",
+          "version": "1.7.3"
         }
       },
       {
@@ -116,6 +152,15 @@
           "branch": null,
           "revision": "7c09176766d4bbc5da377ad857953fb49510a6aa",
           "version": "0.21.0"
+        }
+      },
+      {
+        "package": "SwiftPM",
+        "repositoryURL": "https://github.com/apple/swift-package-manager.git",
+        "state": {
+          "branch": null,
+          "revision": "63a01220e93271dc3bf204b9e13dd1aeb2beefee",
+          "version": "0.2.0"
         }
       },
       {

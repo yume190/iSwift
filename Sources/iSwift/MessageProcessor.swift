@@ -10,6 +10,8 @@ import Foundation
 import Dispatch
 import SourceKit
 import SourceKittenFramework
+import FileKit
+import Basic
 
 class MessageProcessor {
     static var executionCount: Int {
@@ -20,8 +22,14 @@ class MessageProcessor {
     static var _executionCount: Int = 0
     
     static var session: String = ""
-    
-    fileprivate static let replWrapper = try! REPLWrapper(command: "/usr/bin/swift", prompt: "^\\s*\\d+>\\s*$", continuePrompt: "^\\s*\\d+\\.\\s*$")
+
+    fileprivate static let projectDirectoryPath = AbsolutePath(FileKit.projectFolder)
+    fileprivate static let replArgs: [String] = [
+        "-I", projectDirectoryPath.appending(components: ".build","release").asString,
+        "-L", projectDirectoryPath.appending(components: ".build","release").asString,
+        "-lISwiftDependency",
+    ]
+    fileprivate static let replWrapper = try! REPLWrapper(command: "/usr/bin/swift", arguments: replArgs, prompt: "^\\s*\\d+>\\s*$", continuePrompt: "^\\s*\\d+\\.\\s*$")
     
     static func run(_ inMessageQueue: BlockingQueue<Message>, outMessageQueue: BlockingQueue<Message>) {
         while true {
@@ -69,17 +77,12 @@ class MessageProcessor {
                 
                 Logger.debug.print("Sending sourcekitten request -- \(r)")
                 
-                do {
-                    let completionItems = try CodeCompletionItem.parse(response: r.send())
-                    let matches = completionItems.compactMap { $0.descriptionKey }
-                    let cursorEnd = content.cursorPosition
-                    let cursorStartOffset = completionItems.first?.numBytesToErase ?? 0
-                    
-                    replyContent = CompleteReply(matches: matches, cursorStart: cursorEnd - Int(cursorStartOffset), cursorEnd: cursorEnd, status: "ok")
-                } catch let e {
-                    Logger.critical.print(e)
-                    continue
-                }
+                let completionItems = CodeCompletionItem.parse(response: try! r.send())
+                let matches = completionItems.compactMap { $0.descriptionKey }
+                let cursorEnd = content.cursorPosition
+                let cursorStartOffset = completionItems.first?.numBytesToErase ?? 0
+                
+                replyContent = CompleteReply(matches: matches, cursorStart: cursorEnd - Int(cursorStartOffset), cursorEnd: cursorEnd, status: "ok")
             default:
                 continue
             }

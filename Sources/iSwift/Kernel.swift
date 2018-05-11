@@ -8,7 +8,6 @@
 
 import Foundation
 import ZeroMQ
-//import CommandLineKit
 import CommandLine
 import Dispatch
 

@@ -18,6 +18,7 @@ enum REPLState {
 
 class REPLWrapper: NSObject {
     fileprivate let command: String
+    fileprivate let arguments: [String]
     fileprivate var prompt: String
     fileprivate var continuePrompt: String
     fileprivate var lastOutput: String = ""
@@ -26,8 +27,9 @@ class REPLWrapper: NSObject {
     
     fileprivate let runModes = [RunLoopMode.defaultRunLoopMode]
     
-    init(command: String, prompt: String, continuePrompt: String) throws {
+    init(command: String, arguments: [String], prompt: String, continuePrompt: String) throws {
         self.command = command
+        self.arguments = arguments
         self.prompt = prompt
         self.continuePrompt = continuePrompt
         
@@ -96,7 +98,8 @@ class REPLWrapper: NSObject {
     
     fileprivate func launchTask() throws {
         currentTask = Shell()
-        currentTask.launchPath = command
+        currentTask.launchPath = self.command
+        currentTask.arguments = self.arguments
         
         #if os(Linux)
             NotificationCenter.default.addObserver(forName: Shell.dataAvailableNotification, object: nil, queue: nil) {

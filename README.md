@@ -38,7 +38,7 @@ Clone this repo locally. And:
 2. Build the project.
 
 ```
-swift build
+swift build -c release
 ```
 
 3. Currently, in order to run swift kernel locally, you need to create a file named
@@ -47,7 +47,7 @@ with your local clone path.
 
 ```json
 {
- "argv": ["Path/to/iSwift/.build/debug/iSwift", "-f", "{connection_file}"],
+ "argv": ["Path/to/iSwift/.build/release/iSwift", "-f", "{connection_file}"],
  "display_name": "Swift",
  "language": "swift"
 }
