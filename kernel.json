@@ -1,0 +1,9 @@
+{
+    "display_name": "Swift",
+    "language": "swift",
+    "argv": [
+     "/Users/yume/iSwift/.build/release/iSwift",
+     "-f",
+     "{connection_file}"
+    ]
+}
